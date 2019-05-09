@@ -1,0 +1,23 @@
+<hello name="{{ name }}"></hello>
+<button (click)="bookNow()">Book Now</button>
+<div *ngIf="booknow==true">
+<h3>Cart:</h3>
+<ul *ngFor="let service of quote.services">
+  <li>{{service.name}} - ${{service.price}}</li>
+</ul>
+</div>
+<h3>Total:${{quote.total}}</h3>
+
+<h1>MECHANICAL</h1>
+<ul *ngFor="let service of services">
+  <li *ngIf="service.category=='MECHANICAL'" (click)="showDetails(service)">{{service.name}}  
+    <button (click)="addToCart(service)">Add To Cart</button>
+    <ul *ngIf="">
+      <li>{{service.description}}</li>
+      </ul>
+      </li>
+</ul>
+<h1>DETAIL</h1>
+<ul *ngFor="let service of services">
+  <li *ngIf="service.category=='DETAIL'">{{service.name}}</li>
+</ul>
