@@ -1,18 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  name = 'Angular';
-  booknow: any;
-  details: any;
-  quote = {
-    "services": [],
-    "total": 0.00
-  }
+
+export class AppComponent implements OnInit {
   servicecatalog = {
     "catalog": [
       {
@@ -160,35 +154,56 @@ export class AppComponent {
       }
     ]
   };
+  categories: any;
+  emily: any;
+  showCart: any;
+  // details: any;
   services: any;
+  quote = {
+    "services": [],
+    "total": 0.00
+  }
 
-  constructor() {
-    this.booknow = false;
+  constructor() {}
+
+  ngOnInit() {
+    this.categories = [];
+    this.showCart = false;
     this.services = this.servicecatalog.catalog;
-    this.details = [];
+    // this.details = [];
+    this.emily = this.services[0];
+    this.categorize();
   }
 
-  bookNow(){
-    if (this.booknow==true){
-      this.booknow=false
-    }
-    else{
-      this.booknow = true
+  categorize() {
+    for (let i=0; i<this.services.length; i++){
+      if (this.categories.indexOf(this.services[i].category) > -1){}
+      else{
+        this.categories.push(this.services[i].category)
+      }
     }
   }
 
-  addToCart(service){
+  toggleCart(){ //reveals the contents of the users cart
+    if (this.showCart == true) {
+      this.showCart = false
+    }
+    else {
+      this.showCart = true
+    }
+  }
+
+  addToCart(service) {
     this.quote.services.push(service)
     this.quote.total = this.quote.total + parseFloat(service.price)
   }
 
-  showDetails(service){
-    //if the details should be shown, add the service to the show array.
-    //maybe I can just use the index number? That doesn't seem like a good stratgy tho
-    if (this.details.includes(service.name)){
-      this.details
-    }
-    this.details.push(service.name)
-  }
+  // showDetails(service) {
+  //   //if the details should be shown, add the service to the show array.
+  //   if (this.details.includes(service.name)) {
+  //     this.details
+  //   }
+  //   this.details.push(service.name)
+  // }
 
 }

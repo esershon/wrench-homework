@@ -1,8 +1,9 @@
 import './polyfills';
 
 import { enableProdMode } from '@angular/core';
+import {MatNativeDateModule} from '@angular/material';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppModule } from './app/app.module';
 
 platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
