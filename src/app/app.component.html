@@ -15,18 +15,22 @@
   <h1>{{category}}</h1>
   <div *ngFor="let service of services">
     <div *ngIf="service.category==category">
-    <h2>{{service.name}}</h2>
-      <button *ngIf="service.description" (click)="addToCart(service)">Add To Cart</button>
-    <div *ngIf="service.description">
-      {{service.description}}
-    </div>
-    <div *ngIf="service.options">
-      <div *ngFor="let option of service.options">
-        <h4>{{option.service.name}}</h4>
-          <button (click)="addToCart(option.service)">Add To Cart</button>
-          <div>{{option.service.description}}</div>
+      <h2 (click)="showDetails(service)" (mouseover)="showAddButton=service.name">{{service.name}}</h2>
+      <button *ngIf="service.description && showAddButton==service.name" (click)="addToCart(service)">Add To Cart</button>
+
+      <div *ngIf="service.description && visibleDetails.indexOf(service.name)>-1">
+        {{service.description}}
       </div>
-    </div>
+
+      <div *ngIf="service.options && visibleDetails.indexOf(service.name)>-1">
+      <!-- <div *ngIf="service.options && showAddButton==service.name"> -->
+        <div *ngFor="let option of service.options" (mouseover)="showOptionAddButton=option.service.name" (mouseout)="showOptionAddButton=''">
+          <h4 (click)="showDetails(option.service)">{{option.service.name}}</h4>
+            <button *ngIf="showOptionAddButton==option.service.name" (click)="addToCart(option.service)">Add To Cart</button>
+            <div *ngIf="visibleDetails.indexOf(option.service.name)>-1">{{option.service.description}}</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

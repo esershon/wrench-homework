@@ -157,34 +157,34 @@ export class AppComponent implements OnInit {
   categories: any;
   emily: any;
   showCart: any;
-  // details: any;
+  visibleDetails: any;
   services: any;
   quote = {
     "services": [],
     "total": 0.00
   }
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.categories = [];
     this.showCart = false;
     this.services = this.servicecatalog.catalog;
-    // this.details = [];
+    this.visibleDetails = [];
     this.emily = this.services[0];
     this.categorize();
   }
 
   categorize() {
-    for (let i=0; i<this.services.length; i++){
-      if (this.categories.indexOf(this.services[i].category) > -1){}
-      else{
+    for (let i = 0; i < this.services.length; i++) {
+      if (this.categories.indexOf(this.services[i].category) > -1) { }
+      else {
         this.categories.push(this.services[i].category)
       }
     }
   }
 
-  toggleCart(){ //reveals the contents of the users cart
+  toggleCart() { //reveals the contents of the users cart
     if (this.showCart == true) {
       this.showCart = false
     }
@@ -198,12 +198,21 @@ export class AppComponent implements OnInit {
     this.quote.total = this.quote.total + parseFloat(service.price)
   }
 
-  // showDetails(service) {
-  //   //if the details should be shown, add the service to the show array.
-  //   if (this.details.includes(service.name)) {
-  //     this.details
-  //   }
-  //   this.details.push(service.name)
-  // }
+  showDetails(service) {
+    //if the service had options, show the options in stead
+    // if (service.options){
+    //   //add all the options to the array
+    //   for (var i=0; i<service.options.length; i++){
+    //     this.visibleDetails.push(service.options[i].service.name)
+    //   }
+    // }
+    var index = this.visibleDetails.indexOf(service.name);
+    if (index > -1) {
+      this.visibleDetails.splice(index, 1);
+    }
+    else {
+      this.visibleDetails.push(service.name)
+    }
+  }
 
 }
