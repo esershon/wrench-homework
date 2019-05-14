@@ -155,8 +155,7 @@ export class AppComponent implements OnInit {
     ]
   };
   categories: any;
-  emily: any;
-  showCart: any;
+  showCartDetails: any;
   visibleDetails: any;
   services: any;
   quote = {
@@ -168,14 +167,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.categories = [];
-    this.showCart = false;
+    this.showCartDetails = false;
     this.services = this.servicecatalog.catalog;
     this.visibleDetails = [];
-    this.emily = this.services[0];
-    this.categorize();
+    this.populateCategories();
   }
 
-  categorize() {
+  populateCategories() { //creates an array of available category names
     for (let i = 0; i < this.services.length; i++) {
       if (this.categories.indexOf(this.services[i].category) > -1) { }
       else {
@@ -184,28 +182,21 @@ export class AppComponent implements OnInit {
     }
   }
 
-  toggleCart() { //reveals the contents of the users cart
-    if (this.showCart == true) {
-      this.showCart = false
+  toggleCartDetails() { //reveals the contents of the users cart
+    if (this.showCartDetails == true) {
+      this.showCartDetails = false
     }
     else {
-      this.showCart = true
+      this.showCartDetails = true
     }
   }
 
-  addToCart(service) {
+  addToCart(service) { //adds service to cart
     this.quote.services.push(service)
     this.quote.total = this.quote.total + parseFloat(service.price)
   }
 
-  showDetails(service) {
-    //if the service had options, show the options in stead
-    // if (service.options){
-    //   //add all the options to the array
-    //   for (var i=0; i<service.options.length; i++){
-    //     this.visibleDetails.push(service.options[i].service.name)
-    //   }
-    // }
+  toggleServiceDetails(service) { //maintains an array of which details are visible
     var index = this.visibleDetails.indexOf(service.name);
     if (index > -1) {
       this.visibleDetails.splice(index, 1);

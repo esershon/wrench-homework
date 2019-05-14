@@ -1,14 +1,12 @@
 <div class="cartWindow">
-  <!-- show cart -->
-  <div *ngIf="showCart==true">
+  <div *ngIf="showCartDetails==true">
     <h3>Cart:</h3>
     <ul *ngFor="let service of quote.services">
       <li>{{service.name}} - ${{service.price}}</li>
     </ul>
   </div>
-  <!-- show cart -->
   <h3>Total:${{quote.total}}</h3>
-  <button (click)="toggleCart()" class="btn btn-lg btn-primary">Book Now</button>
+  <button (click)="toggleCartDetails()" class="btn btn-lg btn-primary">Book Now</button>
 </div>
 
 <div class="jumbotron">
@@ -16,29 +14,29 @@
 </div>
 
 <div class="container">
-  <div *ngFor="let category of categories" >
+  <div *ngFor="let category of categories">
     <h1 class="display-4">{{category}}</h1>
+
     <div *ngFor="let service of services">
       <div *ngIf="service.category==category" class="alert alert-secondary">
-        <div class="row" (mouseover)="showAddButton=service.name">
-          <div class="col-1">
-            <button *ngIf="service.description && showAddButton==service.name" (click)="addToCart(service)" class="btn btn-success">Add</button>
+        <div class="row" (mouseover)="highlightedService=service.name">
+          <div class="col-1"> <!-- Add Button -->
+            <button *ngIf="service.description && highlightedService==service.name" (click)="addToCart(service)" class="btn btn-success">Add</button>
           </div>
-          <div  class="col">
-            <h2 (click)="showDetails(service)">{{service.name}}</h2>
+          <div  class="col"> <!--Service name and description -->
+            <h2 [ngClass]="{'expandable': service.description}" (click)="toggleServiceDetails(service)">{{service.name}}</h2>
             <div *ngIf="service.description && visibleDetails.indexOf(service.name)>-1" class="alert alert-dark">
               {{service.description}}
             </div>
 
-            <!-- <div *ngIf="service.options && visibleDetails.indexOf(service.name)>-1"> -->
-            <div *ngIf="service.options && showAddButton==service.name">
+            <div *ngIf="service.options && highlightedService==service.name">
               <div *ngFor="let option of service.options" class="alert alert-dark">
-                <div class="row" (mouseover)="showOptionAddButton=option.service.name">
-                  <div class="col-1">
-                    <button *ngIf="showOptionAddButton==option.service.name" (click)="addToCart(option.service)" class="btn btn-success">Add</button>
+                <div class="row" (mouseover)="highlightedOption=option.service.name">
+                  <div class="col-1"> <!-- Option Add Button -->
+                    <button *ngIf="highlightedOption==option.service.name" (click)="addToCart(option.service)" class="btn btn-success">Add</button>
                   </div>
-                  <div class="col">
-                    <h4 (click)="showDetails(option.service)" (mouseover)="showOptionAddButton=option.service.name">{{option.service.name}}</h4>
+                  <div class="col"> <!-- Option name and description -->
+                    <h4 (click)="toggleServiceDetails(option.service)" (mouseover)="highlightedOption=option.service.name">{{option.service.name}}</h4>
                     <div *ngIf="visibleDetails.indexOf(option.service.name)>-1" class="alert alert-dark">{{option.service.description}}</div>
                   </div>
                 </div>
@@ -48,5 +46,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
