@@ -1,4 +1,4 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
+@import url('https://unpkg.com/bootstrap/dist/css/bootstrap.min.css');
 
 .jumbotron{
 text-align: center
